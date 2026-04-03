@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inscripción Cursos IA 2026</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #020617;
+        background-image: url('fondo.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    /* Overlay de profundidad */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%);
+        z-index: -1;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        width: 95%;
+        margin: 40px auto;
+        /* Glassmorphism Ultra-Clean */
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        padding: 48px;
+        border-radius: 28px;
+        /* El secreto Premium: un borde sutil que brilla arriba */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: 800;
+        font-size: 2.2rem;
+        letter-spacing: -0.04em;
+        background: linear-gradient(to bottom, #ffffff 0%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 12px;
+    }
+
+    .descripcion {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #94a3b8;
+        font-weight: 300;
+        font-size: 16px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    /* 1. EFECTO PARA LOS INPUTS (BRILLO ALREDEDOR) */
+input, select {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(2, 6, 23, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 18px;
+    border-radius: 14px;
+    color: #f1f5f9;
+    font-size: 15px;
+    position: relative;
+    /* Transición suave para el brillo */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    /* Sombra interna y externa para el efecto de "energía" */
+    box-shadow: 0 0 0 1px #3b82f6, 
+                0 0 20px rgba(59, 130, 246, 0.4),
+                inset 0 0 10px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px); /* Pequeño levante al seleccionar */
+}
+
+/* --- BOTÓN CON REFLEJO LENTO Y FRECUENTE --- */
+button {
+    width: 100%;
+    position: relative;
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 32px;
+    overflow: hidden; /* Mantiene el brillo dentro del botón */
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+/* El "Haz de Luz" reflectivo */
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 80%; /* Más ancho para que el reflejo sea más visible */
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.15) 40%, /* Centro del brillo */
+        rgba(255, 255, 255, 0.35) 50%, /* Punto máximo de luz */
+        rgba(255, 255, 255, 0.15) 60%,
+        transparent
+    );
+    transform: skewX(-30deg);
+    /* DURACIÓN: 3s (más lento), FRECUENCIA: constante */
+    animation: shine-slow 3s infinite ease-in-out; 
+}
+
+@keyframes shine-slow {
+    0% {
+        left: -120%;
+    }
+    /* El reflejo tarda más en cruzar (del 0% al 70%) */
+    70% {
+        left: 120%;
+    }
+    /* Pequeña pausa de elegancia antes de reiniciar (del 70% al 100%) */
+    100% {
+        left: 120%;
+    }
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.7);
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+/* OPCIONAL: Un sutil brillo al pasar el mouse sobre el contenedor */
+.container:hover {
+    border-top: 1px solid rgba(59, 130, 246, 0.5);
+    transition: border 0.9s ease;
+}
+
+    /* Checkbox Pro */
+    .checkbox {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+    }
+
+    .checkbox input {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        accent-color: #3b82f6;
+    }
+
+    .checkbox label {
+        margin: 0;
+        color: #94a3b8;
+        text-transform: none;
+        letter-spacing: normal;
+        font-weight: 400;
+    }
+
+    @media(max-width:700px){
+        .grid { grid-template-columns: 1fr; }
+        .container { padding: 30px 20px; margin: 15px; }
+    }
+</style>
+
+
+
+
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cursos IA para la Educación 2026</h1>
+
+<p class="descripcion">
+Regístrate para recibir acceso a los cursos de Inteligencia Artificial
+para docentes. Recibirás los enlaces en tu correo.
+</p>
+
+<form id="formDocente">
+
+<div class="grid">
+
+<div>
+<label>Nombres</label>
+<input name="nombres" required>
+</div>
+
+<div>
+<label>Apellidos</label>
+<input name="apellidos" required>
+</div>
+
+<div>
+<label>Correo electrónico</label>
+<input type="email" name="correo" required>
+</div>
+
+<div>
+<label>Teléfono</label>
+<input name="telefono" required>
+</div>
+
+<div>
+<label>País</label>
+<input name="pais" required>
+</div>
+
+<div>
+<label>Ciudad</label>
+<input name="ciudad" required>
+</div>
+
+<div class="full">
+<label>Institución educativa</label>
+<input name="institucion" required>
+</div>
+
+<div>
+<label>Cargo</label>
+<select name="cargo" required>
+<option value="">Seleccione</option>
+<option>Docente</option>
+<option>Coordinador</option>
+<option>Rector</option>
+<option>Directivo</option>
+<option>Otro</option>
+</select>
+</div>
+
+<div>
+<label>Área de enseñanza</label>
+<input name="areaEnsenanza" required>
+</div>
+
+<div class="full">
+<label>Nivel educativo</label>
+<select name="nivelEducativo" required>
+<option value="">Seleccione</option>
+<option>Preescolar</option>
+<option>Primaria</option>
+<option>Secundaria</option>
+<option>Media</option>
+<option>Universidad</option>
+<option>Formación técnica</option>
+</select>
+</div>
+
+<div class="checkbox full">
+<input type="checkbox" name="aceptaComunicaciones" value="true">
+<label>Acepto recibir información sobre cursos de IA</label>
+</div>
+
+</div>
+
+<button type="submit">Inscribirme a los Cursos IA 2026</button>
+
+<div class="success" id="success">
+Registro enviado correctamente. Revisa tu correo.
+</div>
+
+</form>
+
+</div>
+
+<script>
+document.getElementById("formDocente")
+.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const form = e.target;
+const formData = new FormData(form);
+
+const data = {
+nombres: formData.get("nombres"),
+apellidos: formData.get("apellidos"),
+correo: formData.get("correo"),
+telefono: formData.get("telefono"),
+pais: formData.get("pais"),
+ciudad: formData.get("ciudad"),
+institucion: formData.get("institucion"),
+cargo: formData.get("cargo"),
+areaEnsenanza: formData.get("areaEnsenanza"),
+nivelEducativo: formData.get("nivelEducativo"),
+aceptaComunicaciones: formData.get("aceptaComunicaciones") === "true"
+};
+
+document.getElementById("formDocente")
+.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const form = e.target;
+const formData = new FormData(form);
+const button = form.querySelector("button");
+
+const data = {
+nombres: formData.get("nombres"),
+apellidos: formData.get("apellidos"),
+correo: formData.get("correo"),
+telefono: formData.get("telefono"),
+pais: formData.get("pais"),
+ciudad: formData.get("ciudad"),
+institucion: formData.get("institucion"),
+cargo: formData.get("cargo"),
+areaEnsenanza: formData.get("areaEnsenanza"),
+nivelEducativo: formData.get("nivelEducativo"),
+aceptaComunicaciones: formData.get("aceptaComunicaciones") === "true"
+};
+
+button.innerText = "Enviando...";
+button.disabled = true;
+
+try {
+
+const res = await fetch("https://localhost:7131/api/docentes", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+});
+
+if(res.ok){
+document.getElementById("success").style.display="block";
+form.reset();
+}else{
+alert("Error al registrar");
+}
+
+} catch (error){
+alert("No se pudo conectar con el servidor");
+}
+
+button.innerText = "Inscribirme a los Cursos IA 2026";
+button.disabled = false;
+
+});
+
+});
+</script>
+
+</body>
+</html>
