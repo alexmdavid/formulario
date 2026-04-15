@@ -9,6 +9,15 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+    .success {
+    display: none; /* Esto lo mantiene invisible al cargar la página */
+    color: #4ade80;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
     body {
         font-family: 'Inter', -apple-system, sans-serif;
         margin: 0;
@@ -321,81 +330,65 @@ Registro enviado correctamente. Revisa tu correo.
 </div>
 
 <script>
-document.getElementById("formDocente")
-.addEventListener("submit", async function(e){
+    // Seleccionamos el formulario y los elementos una sola vez
+    const formDocente = document.getElementById("formDocente");
+    const successMsg = document.getElementById("success");
+    const submitBtn = formDocente.querySelector("button");
 
-e.preventDefault();
+    formDocente.addEventListener("submit", async function(e) {
+        e.preventDefault();
 
-const form = e.target;
-const formData = new FormData(form);
+        // 1. Bloqueo inmediato para evitar doble envío
+        submitBtn.innerText = "Enviando...";
+        submitBtn.disabled = true;
+        successMsg.style.display = "none"; // Ocultar si estaba visible de antes
 
-const data = {
-nombres: formData.get("nombres"),
-apellidos: formData.get("apellidos"),
-correo: formData.get("correo"),
-telefono: formData.get("telefono"),
-pais: formData.get("pais"),
-ciudad: formData.get("ciudad"),
-institucion: formData.get("institucion"),
-cargo: formData.get("cargo"),
-areaEnsenanza: formData.get("areaEnsenanza"),
-nivelEducativo: formData.get("nivelEducativo"),
-aceptaComunicaciones: formData.get("aceptaComunicaciones") === "true"
-};
+        const formData = new FormData(formDocente);
+        
+        // Estructura de datos para el Backend
+        const data = {
+            nombres: formData.get("nombres"),
+            apellidos: formData.get("apellidos"),
+            correo: formData.get("correo"),
+            telefono: formData.get("telefono"),
+            pais: formData.get("pais"),
+            ciudad: formData.get("ciudad"),
+            institucion: formData.get("institucion"),
+            cargo: formData.get("cargo"),
+            areaEnsenanza: formData.get("areaEnsenanza"),
+            nivelEducativo: formData.get("nivelEducativo"),
+            aceptaComunicaciones: formDocente.querySelector('[name="aceptaComunicaciones"]').checked
+        };
 
-document.getElementById("formDocente")
-.addEventListener("submit", async function(e){
+        try {
+            // Ajustamos la URL a la que ya probamos en Postman
+            const res = await fetch("https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
 
-e.preventDefault();
+            if (res.ok) {
+                // ÉXITO REAL: Mostramos mensaje y limpiamos formulario
+                successMsg.style.display = "block";
+                formDocente.reset();
+            } else {
+                // El servidor respondió pero con un error (ej. 400, 500)
+                const errorData = await res.text();
+                alert("Error del servidor: " + errorData);
+            }
 
-const form = e.target;
-const formData = new FormData(form);
-const button = form.querySelector("button");
-
-const data = {
-nombres: formData.get("nombres"),
-apellidos: formData.get("apellidos"),
-correo: formData.get("correo"),
-telefono: formData.get("telefono"),
-pais: formData.get("pais"),
-ciudad: formData.get("ciudad"),
-institucion: formData.get("institucion"),
-cargo: formData.get("cargo"),
-areaEnsenanza: formData.get("areaEnsenanza"),
-nivelEducativo: formData.get("nivelEducativo"),
-aceptaComunicaciones: formData.get("aceptaComunicaciones") === "true"
-};
-
-button.innerText = "Enviando...";
-button.disabled = true;
-
-try {
-
-const res = await fetch("https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify(data)
-});
-
-if(res.ok){
-document.getElementById("success").style.display="block";
-form.reset();
-}else{
-alert("Error al registrar");
-}
-
-} catch (error){
-alert("No se pudo conectar con el servidor");
-}
-
-button.innerText = "Inscribirme a los Cursos IA 2026";
-button.disabled = false;
-
-});
-
-});
+        } catch (error) {
+            // Error de conexión (puerto cerrado, internet, etc.)
+            alert("No se pudo conectar con el servidor. Verifica tu conexión.");
+        } finally {
+            // Siempre rehabilitamos el botón al terminar
+            submitBtn.innerText = "Inscribirme a los Cursos IA 2026";
+            submitBtn.disabled = false;
+        }
+    });
 </script>
 
 </body>
