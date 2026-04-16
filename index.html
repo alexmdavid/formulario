@@ -277,6 +277,7 @@ para docentes. Recibirás los enlaces en tu correo.
 <input name="ciudad" required>
 </div>
 
+<!--
 <div class="full">
 <label>Institución educativa</label>
 <input name="institucion" required>
@@ -311,6 +312,7 @@ para docentes. Recibirás los enlaces en tu correo.
 <option>Formación técnica</option>
 </select>
 </div>
+-->
 
 <div class="checkbox full">
 <input type="checkbox" name="aceptaComunicaciones" value="true">
@@ -353,10 +355,10 @@ Registro enviado correctamente. Revisa tu correo.
             telefono: formData.get("telefono"),
             pais: formData.get("pais"),
             ciudad: formData.get("ciudad"),
-            institucion: formData.get("institucion"),
-            cargo: formData.get("cargo"),
-            areaEnsenanza: formData.get("areaEnsenanza"),
-            nivelEducativo: formData.get("nivelEducativo"),
+            institucion: "",
+            cargo: "",
+            areaEnsenanza: "",
+            nivelEducativo: "",
             aceptaComunicaciones: formDocente.querySelector('[name="aceptaComunicaciones"]').checked
         };
 
